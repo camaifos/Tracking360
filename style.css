@@ -1,0 +1,79 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+#menu-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'Roboto', sans-serif;
+  color: black;
+}
+
+.menubox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.menubox > * {
+  background-color: white;
+  outline: 2px solid black;
+}
+
+.menubox-label {
+  display: none;
+}
+
+.menubox-icon {
+  width: 60px;
+  min-height: 60px;
+  flex: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: 0.4s;
+}
+
+.menubox.active .menubox-icon, .menubox-icon:hover {
+  background-color: rgb(225, 255, 255);
+}
+
+.menubox-content {
+  width: 40%;
+  padding: 15px;
+}
+
+.source-box .menubox-content {
+  width: auto;
+  min-width: 40%;
+  padding: 0;
+  gap: 0;
+}
+
+.source-box .menubox-content .horizontal-stack {
+  padding: 15px;
+}
+
+.menubox .vertical-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menubox .horizontal-stack {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  gap: 15px;
+}
