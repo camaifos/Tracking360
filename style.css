@@ -24,6 +24,7 @@ canvas {
   flex-direction: row;
   justify-content: flex-start;
   align-items: stretch;
+  gap: 2px;
 }
 
 .menubox > * {
@@ -42,21 +43,37 @@ canvas {
   background-size: contain;
   background-repeat: no-repeat;
   transition: 0.4s;
+  cursor: pointer;
 }
 
 .menubox.active .menubox-icon, .menubox-icon:hover {
-  background-color: rgb(225, 255, 255);
+  background-color: rgb(225, 225, 225);
 }
 
 .menubox-content {
   width: 40%;
+  max-height: 100vh;
   padding: 15px;
+  overflow-y: hidden;
+  transition-property: max-height, padding;
+  transition-duration: .2s;
+  transition-timing-function: ease-out;
+}
+
+.menubox-content.hidden {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  outline-style: none;
 }
 
 .source-box .menubox-content {
   width: auto;
   min-width: 40%;
   padding: 0;
+}
+
+.source-box .menubox-content .vertical-stack {
   gap: 0;
 }
 

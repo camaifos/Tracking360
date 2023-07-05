@@ -11,11 +11,22 @@ class MenuBox {
     this.iconBox = createDiv();
     this.iconBox.style("background-image", "url(" + iconUrl + ")");
     this.iconBox.addClass("menubox-icon");
+    this.iconBox.mouseClicked(() => {
+      this.container.toggleClass("active");
+      this.contentBox.toggleClass("hidden");
+
+      if (this.container.hasClass("active")) {
+        this.contentBox.style("max-height", this.contentBox.elt.scrollHeight + "px");
+      } else {
+        this.contentBox.style("max-height", "0");
+      }
+    });
     this.iconBox.parent(this.container);
 
     this.contentBox = createDiv();
     this.contentBox.child(content);
     this.contentBox.addClass("menubox-content");
+    this.contentBox.addClass("hidden");
     this.contentBox.parent(this.container);
   }
   
