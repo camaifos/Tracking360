@@ -15,6 +15,7 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  font-size: 18px;
   font-family: 'Roboto', sans-serif;
   color: black;
 }
@@ -30,6 +31,19 @@ canvas {
 .menubox > * {
   background-color: white;
   outline: 2px solid black;
+}
+
+.menubox a {
+  text-decoration: none;
+  color: black;
+}
+
+.menubox a:hover {
+  text-decoration: underline;
+}
+
+.menubox a:active {
+  text-decoration: underline;
 }
 
 .menubox-label {
