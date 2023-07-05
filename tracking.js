@@ -41,15 +41,6 @@ const trackers = [
       const b2 = blue(this.color);
 
       if (previewLastClick) {
-        print(previewLastClick.x, previewLastClick.y);
-        print(
-          map(previewLastClick.x, 0, previewCtx.width, 0, video.width),
-          map(previewLastClick.y, 0, previewCtx.height, 0, video.height)
-        );
-        print(color(video.get(
-          map(previewLastClick.x, 0, previewCtx.width, 0, video.width),
-          map(previewLastClick.y, 0, previewCtx.height, 0, video.height)
-        )));
         this.color = color(video.get(
           map(previewLastClick.x, 0, previewCtx.width, 0, video.width),
           map(previewLastClick.y, 0, previewCtx.height, 0, video.height)
@@ -139,6 +130,9 @@ const trackers = [
         }
       }
 
+      if (brightestX === undefined || brightestY === undefined) {
+        return;
+      }
       if (brightestValue < this.threshold * 3) {
         return;
       }
@@ -187,7 +181,6 @@ const trackers = [
     
     track(video, previewCtx, previewLastClick) {
       if (previewLastClick) {
-        print("previewLastClick");
         this.pointCount = 1;
         this.curXY[0] = map(previewLastClick.x, 0, previewCtx.width, 0, video.width);
         this.curXY[1] = map(previewLastClick.y, 0, previewCtx.height, 0, video.height);
