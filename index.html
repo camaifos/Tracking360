@@ -15,6 +15,38 @@
     <div id="canvas-container"></div>
     <div id="menu-container"></div>
   </main>
+
+  <div class="overlayWrapper">
+      <div class="overlay">
+        <button class="closeButton">X</button>
+        <span>Möglichkeiten von Tracking in 360°<br>Ein Open Source Projekt<br/><br/>
+          Wähle ein Panoramavideo und eine Art des Trackings aus. Clicke auf das Zahrad um das Tracking zu beeinflussen. Unter Informationen kann man sich zur Art des Tracking informieren.<br/><br/>
+          Viel Spaß beim Ausprobieren!
+        </span>
+      </div>
+    </div>
+
+    <div class="loading">
+      <span>Ladet, bitte warten...</span>
+    </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const loadingDiv = document.querySelector(".loading");
+      const overlayWrapper = document.querySelector(".overlayWrapper");
+      window.addEventListener("load", function() {
+        loadingDiv.style.display = "none";
+        overlayWrapper.style.visibility = "visible";
+      });
+
+      const closeButton = document.querySelector(".closeButton");
+      closeButton.addEventListener("click", function() {
+        overlayWrapper.style.visibility = "hidden";
+      });
+    });
+  </script>
+
+
+
   <script src="main.js"></script>
   <script src="menu.js"></script>
   <script src="tracking.js"></script>
