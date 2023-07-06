@@ -62,30 +62,30 @@ function setup() {
   for (const tracker of trackers) {
     tracker.init();
   }
-  
+
   activeTracker = trackers[0];
-  
+
   preview = createGraphics(400, 200);
   preview.mouseClicked((event) => {
     previewLastClick = createVector(event.offsetX, event.offsetY);
   });
-  
+
   setupMenu();
 }
 
 function draw() {
   background(220);
-  
+
   activeVideo.video.loadPixels();
   if (activeVideo.video.pixels.length === 0) {
     return;
   }
 
   preview.image(activeVideo.video, 0, 0, preview.width, preview.height);
-  
+
   const trackPoint = activeTracker.track(activeVideo.video, preview, previewLastClick);
   previewLastClick = null;
-  
+
   if (paused) {
     // TODO
   } else {
@@ -144,7 +144,7 @@ function setupMenu() {
     sourceContent
   );
   sourceBox.container.addClass('source-box');
-  
+
   // Tracking
   const trackingContent = createDiv();
   trackingContent.addClass('vertical-stack');
@@ -161,7 +161,7 @@ function setupMenu() {
     'media/Tracking.png',
     trackingContent
   );
-  
+
   // Tuning
   const tuningContent = activeTracker.params;
   tuningBox = new MenuBox(
@@ -170,7 +170,7 @@ function setupMenu() {
     'media/Parameter.png',
     tuningContent
   );
-  
+
   // Info
   const infoContent = createP(activeTracker.description);
   infoBox = new MenuBox(
@@ -179,12 +179,12 @@ function setupMenu() {
     'media/Infos.png',
     infoContent
   );
-  
+
   // About
   const aboutContent = createDiv()
-      .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt"))
-      .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi"));
-      // ...
+    .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt"))
+    .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi"));
+  // ...
   aboutBox = new MenuBox(
     menu,
     "About",
@@ -197,16 +197,16 @@ function easing(trackPoint, prevFocusPoint, amount) {
   return p5.Vector.add(prevFocusPoint, p5.Vector.sub(trackPoint, prevFocusPoint).mult(amount));
 }
 
-function panoView(pano, trackPoint){
+function panoView(pano, trackPoint) {
   push();
   noStroke();
   texture(pano);
-  translate(0,0);
+  translate(0, 0);
 
-  rotateX(map(trackPoint.y, 0, pano.height, PI/2, -PI/2));
+  rotateX(map(trackPoint.y, 0, pano.height, PI / 2, -PI / 2));
   rotateY(map(trackPoint.x, 0, pano.width, -PI, PI));
-  
+
   scale(-1, 1); // important since we're inside sphere!
   sphere(height);
-  pop(); 
+  pop();
 }

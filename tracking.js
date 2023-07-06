@@ -32,7 +32,7 @@ const trackers = [
       this.color = color(255, 0, 0);
     },
 
-    changedSource(video) {},
+    changedSource(video) { },
 
     track(video, previewCtx, previewLastClick) {
       this.color = this.colorPicker.color();
@@ -105,14 +105,14 @@ const trackers = [
       this.threshold = 0;
     },
 
-    changedSource(video) {},
+    changedSource(video) { },
 
     track(video, previewCtx) {
       this.threshold = this.thresholdSlider.value();
 
       let brightestValue = 0;
       let brightestX, brightestY;
-      
+
       video.loadPixels();
       for (let y = 0; y < video.height; y += 8) {
         for (let x = 0; x < video.width; x += 8) {
@@ -155,7 +155,7 @@ const trackers = [
   {
     label: "Punkt",
     params: "",
-    
+
     init() {
       this.pointCount = 0;
       this.winSize = 20;
@@ -163,7 +163,7 @@ const trackers = [
       this.eps = 0.01;
       this.minEigenThreshold = 0.001;
     },
-    
+
     changedSource(video) {
       this.prevPyr = new jsfeat.pyramid_t(3);
       this.prevPyr.allocate(video.width, video.height, jsfeat.U8C1_t);
@@ -178,20 +178,20 @@ const trackers = [
       this.curXY[0] = -1;
       this.curXY[1] = -1;
     },
-    
+
     track(video, previewCtx, previewLastClick) {
       if (previewLastClick) {
         this.pointCount = 1;
         this.curXY[0] = map(previewLastClick.x, 0, previewCtx.width, 0, video.width);
         this.curXY[1] = map(previewLastClick.y, 0, previewCtx.height, 0, video.height);
       }
-      
+
       video.loadPixels();
-      
+
       if (video.pixels.length === 0) {
         return;
       }
-      
+
       // Swap previous and current
       const XYSwap = this.prevXY;
       this.prevXY = this.curXY;
@@ -199,11 +199,11 @@ const trackers = [
       const pyrSwap = this.prevPyr;
       this.prevPyr = this.curPyr;
       this.curPyr = pyrSwap;
-      
+
       jsfeat.imgproc.grayscale(video.pixels, video.width, video.height, this.curPyr.data[0]);
       this.curPyr.build(this.curPyr.data[0], true);
       jsfeat.optical_flow_lk.track(this.prevPyr, this.curPyr, this.prevXY, this.curXY, this.pointCount, this.winSize, this.maxIter, this.pointStatus, this.eps, this.minEigenThreshold);
-      
+
       // Prune points
       let i = 0, j = 0;
       for (let i = 0; i < this.pointCount; ++i) {
@@ -220,11 +220,11 @@ const trackers = [
           ++j;
         }
       }
-      
+
       if (this.curXY[0] === -1 || this.curXY[1] === -1) {
         return;
       }
-      
+
       // Draw a circle at the tracked point
       previewCtx.noFill();
       previewCtx.strokeWeight(2);
@@ -232,11 +232,11 @@ const trackers = [
       previewCtx.circle(map(this.curXY[0], 0, video.width, 0, previewCtx.width), map(this.curXY[1], 0, video.height, 0, previewCtx.height), 20);
       previewCtx.stroke(0);
       previewCtx.circle(map(this.curXY[0], 0, video.width, 0, previewCtx.width), map(this.curXY[1], 0, video.height, 0, previewCtx.height), 24);
-      
+
       return createVector(this.curXY[0], this.curXY[1]);
     },
   },
-  
+
   /*
    *  Optical flow tracker
    */
@@ -294,20 +294,20 @@ const trackers = [
             if (zone.mag < this.threshold) {
               continue;
             }
-            
+
             let alpha = QUARTER_PI / 2;  // 45°
             if (!this.xAxis && !this.yAxis) {
               continue;
             } else if (this.xAxis && !this.yAxis) {
-              if ((-PI+alpha < zone.angle && zone.angle < -alpha) || (alpha < zone.angle && zone.angle < PI-alpha)) {
+              if ((-PI + alpha < zone.angle && zone.angle < -alpha) || (alpha < zone.angle && zone.angle < PI - alpha)) {
                 continue;
               }
             } else if (this.yAxis && !this.xAxis) {
-              if ((-PI <= zone.angle && zone.angle < -PI/2-alpha) || (-PI/2+alpha < zone.angle && zone.angle < PI/2-alpha) || (PI/2 + alpha < zone.angle && zone.angle <= PI)) {
+              if ((-PI <= zone.angle && zone.angle < -PI / 2 - alpha) || (-PI / 2 + alpha < zone.angle && zone.angle < PI / 2 - alpha) || (PI / 2 + alpha < zone.angle && zone.angle <= PI)) {
                 continue;
               }
             }
-            
+
             // Draw arrow
             const pos = createVector(
               map(zone.pos.x, 0, video.width, 0, previewCtx.width),
@@ -319,11 +319,11 @@ const trackers = [
             previewCtx.rotate(zone.angle);
             previewCtx.strokeWeight(2);
             previewCtx.stroke(255);
-            previewCtx.line(0,0, mag,0);
-            previewCtx.line(mag,0, mag-5,-5);
-            previewCtx.line(mag,0, mag-5,5);
+            previewCtx.line(0, 0, mag, 0);
+            previewCtx.line(mag, 0, mag - 5, -5);
+            previewCtx.line(mag, 0, mag - 5, 5);
             previewCtx.pop();
-            
+
             if (zone.mag > largestMag) {
               largestMag = zone.mag;
               largestZone = zone;
@@ -364,7 +364,7 @@ const trackers = [
     },
 
     changedSource(video) {
-      
+
     },
 
     track(video, previewCtx) {
@@ -394,7 +394,7 @@ const trackers = [
         } else if (obj.label !== 'person' && !this.objects) {
           continue;
         }
-        
+
         if (i++ === 0) {
           vec = createVector(obj.x, obj.y);
           previewCtx.stroke(0, 255, 0);

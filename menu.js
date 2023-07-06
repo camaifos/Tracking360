@@ -29,7 +29,7 @@ class MenuBox {
     this.contentBox.addClass("hidden");
     this.contentBox.parent(this.container);
   }
-  
+
   setContent(content) {
     for (const child of this.contentBox.child()) {
       child.remove();
