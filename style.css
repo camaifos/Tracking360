@@ -95,11 +95,8 @@ canvas {
   color: black;
 }
 
-.menubox a:hover {
-  text-decoration: underline;
-}
-
-.menubox a:active {
+.menubox a:hover,
+.menubox a.active {
   text-decoration: underline;
 }
 

@@ -135,27 +135,36 @@ function setupMenu() {
   const sourceList = createDiv();
   sourceList.parent(sourceContent);
   sourceList.addClass('horizontal-stack');
+  const changeSource = (videoBtn, video, isWebcam) => {
+    for (const btn of sourceList.child()) {
+      btn.classList.remove('active');
+    }
+    videoBtn.elt.classList.add('active');
+
+    for (const video of videos) {
+      // Plays from the beginning next time, alternatively use .pause()
+      if (video) {
+        video.video.stop();
+      }
+    }
+    activeVideo = video;
+    if (isWebcam) {
+      activeVideo.video.play();
+    } else {
+      activeVideo.video.loop();
+    }
+    for (const tracker of trackers) {
+      tracker.changedSource(activeVideo.video);
+    }
+    focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
+  };
   for (const video of videos) {
     const videoBtn = createTextButton(video.label, () => {
-      for (const video of videos) {
-        // Plays from the beginning next time, alternatively use .pause()
-        video.video.stop();
-        webcam.stop();
-      }
-      activeVideo = video;
-      activeVideo.video.loop();
-      for (const tracker of trackers) {
-        tracker.changedSource(activeVideo.video);
-      }
-      focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
+      changeSource(videoBtn, video, false);
     });
     videoBtn.parent(sourceList);
   }
   const webcamBtn = createTextButton('Webcam', () => {
-    for (const video of videos) {
-      // Plays from the beginning next time, alternatively use .pause()
-      video.video.stop();
-    }
     if (!webcam) {
       const webcamVideo = createCapture(VIDEO);
       webcamVideo.hide();
@@ -164,12 +173,9 @@ function setupMenu() {
         label: 'Webcam',
       };
     }
-    activeVideo = webcam;
-    for (const tracker of trackers) {
-      tracker.changedSource(activeVideo.video);
-    }
-    focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
+    changeSource(webcamBtn, webcam, true);
   });
+  sourceList.child()[0].classList.add('active');
   webcamBtn.parent(sourceList);
     
   sourceBox = new MenuBox(
@@ -185,11 +191,17 @@ function setupMenu() {
   trackingContent.addClass('vertical-stack');
   for (const tracker of trackers) {
     const trackerBtn = createTextButton(tracker.label, () => {
+      for (const btn of trackingContent.child()) {
+        btn.classList.remove('active');
+      }
+      trackerBtn.elt.classList.add('active');
+
       activeTracker = tracker;
       tuningBox.setContent(tracker.params);
     });
     trackerBtn.parent(trackingContent);
   }
+  trackingContent.child()[0].classList.add('active');
   trackingBox = new MenuBox(
     menu,
     "Tracking",
