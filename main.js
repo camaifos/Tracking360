@@ -35,6 +35,9 @@ let tuningBox;
 let infoBox;
 let aboutBox;
 
+let baseFocalLength;
+let zoomFactor;
+
 function setup() {
   const canvas = createCanvas(windowWidth, windowHeight, WEBGL);
   canvas.parent('canvas-container');
@@ -73,6 +76,9 @@ function setup() {
   });
 
   setupMenu();
+
+  baseFocalLength = sqrt(3) / 2;
+  zoomFactor = 1.0;
 }
 
 function draw() {
@@ -118,10 +124,19 @@ function draw() {
       panoView(activeVideo.video, focusPoint);
     }
   }
+
+  const focalLength = baseFocalLength * zoomFactor;
+  const fov = 2 * atan(1 / (2 * focalLength));
+  perspective(fov);
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+function mouseWheel(event) {
+  zoomFactor = constrain(zoomFactor + event.delta / 1000, 0.25, 5);
+  return false;
 }
 
 function setupMenu() {
