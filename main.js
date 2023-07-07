@@ -65,7 +65,7 @@ function setup() {
 
   activeTracker = trackers[0];
 
-  preview = createGraphics(400, 200);
+  preview = createGraphics(width*0.3, (width*0.3)/2 );
   preview.mouseClicked((event) => {
     previewLastClick = createVector(event.offsetX, event.offsetY);
   });
@@ -182,8 +182,10 @@ function setupMenu() {
 
   // About
   const aboutContent = createDiv()
-    .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt"))
-    .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi"));
+    .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt</br></br>"))
+    .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi</br></br>"))
+    .child(createP("Prozessdokumentation hier.</br></br>"))
+    .child(createP("Danke</br>Ted Davis (Mentor)</br>Viola Diehl (Mentorin)</br>Jonas Schafftner (Mentor)</br>Florian Affolter"));
   // ...
   aboutBox = new MenuBox(
     menu,

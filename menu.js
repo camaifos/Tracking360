@@ -60,6 +60,9 @@ function createLabelledSlider(min, max, value, step) {
   const label = createSpan(value);
   container.child(slider);
   container.child(label);
+
+  slider.class("slider");
+
   slider.input(() => label.html(slider.value()));
   container.value = (value) => {
     if (value !== undefined) {

@@ -21,7 +21,7 @@ const trackers = [
     label: "Farbe",
     get params() {
       const params = createDiv();
-      params.child(createP("Klicke auf das Panoramavideo um eine Farbe zu verfolgen."))
+      params.child(createP("Klicke auf das Panoramavideo oder nutze den Farbwähler um eine Farbe zu verfolgen."))
       this.colorPicker = createColorPicker(this.color);
       params.child(this.colorPicker);
       return params;
@@ -97,8 +97,12 @@ const trackers = [
   {
     label: "Helligkeit",
     get params() {
+      const params = createDiv();
+      params.child(createP("Verschiebe den Regler um die dunkelste bis hellste Stelle zu verfolgen."))
       this.thresholdSlider = createLabelledSlider(0, 255, this.threshold);
-      return this.thresholdSlider;
+      this.thresholdSlider.style("margin-top", "10px");
+      params.child(this.thresholdSlider);
+      return params;
     },
 
     init() {
@@ -153,8 +157,12 @@ const trackers = [
    *  Point tracker
    */
   {
-    label: "Punkt",
-    params: "",
+    label: "Pixelverfolgung",
+    get params() {
+      const params = createDiv();
+      params.child(createP("Klicke auf das Panoramavideo um einen Punkt zu verfolgen."))
+      return params;
+    },
 
     init() {
       this.pointCount = 0;
@@ -244,14 +252,17 @@ const trackers = [
     label: "Bewegung",
     get params() {
       const params = createDiv();
+      params.child(createP("Bestimme die Zonengrösse in denen die grösste Bewegung gemessen wird und dessen Empfindlichkeit mit den Regeln."));
       this.zoneSizeSlider = createLabelledSlider(1, 100, this.zoneSize, 1);
+      this.zoneSizeSlider.style("margin-bottom", "10px");
       this.thresholdSlider = createLabelledSlider(0, 100, this.threshold);
-      this.xAxisCheckbox = createCheckbox("X axis", this.xAxis);
-      this.yAxisCheckbox = createCheckbox("Y axis", this.yAxis);
-      params.child(createP("Zone size"));
+      this.xAxisCheckbox = createCheckbox("X-Achse", this.xAxis);
+      this.yAxisCheckbox = createCheckbox("Y-Achse", this.yAxis);
+      params.child(createP("</br>Zonengrösse"));
       params.child(this.zoneSizeSlider);
-      params.child(createP("Threshold"));
+      params.child(createP("Empfindlichkeit"));
       params.child(this.thresholdSlider);
+      params.child(createP("</br>Wähle aus entlang welcher Achse die Bewegung gemessen werden soll."));
       params.child(this.xAxisCheckbox);
       params.child(this.yAxisCheckbox);
       return params;
@@ -349,6 +360,7 @@ const trackers = [
     label: "Objekterkennung",
     get params() {
       const params = createDiv();
+      params.child(createP("Wähle welcher Themenbereich verfolgt werden soll."));
       this.peopleCheckbox = createCheckbox("Personen", this.people);
       this.objectsCheckbox = createCheckbox("Objekte", this.objects);
       params.child(this.peopleCheckbox);
