@@ -20,6 +20,7 @@ const videoSrcs = [
 let welcome = true;
 
 let videos;
+let webcam;
 let activeVideo;
 let activeTracker;
 let focusPoint;
@@ -127,7 +128,6 @@ function setupMenu() {
   const menu = select('#menu-container');
 
   // Source
-  // TODO: Add a way to select a video file and call activeTracker.changedSource(video)
   const sourceContent = createDiv();
   sourceContent.addClass('vertical-stack');
   sourceContent.child(preview);
@@ -140,16 +140,38 @@ function setupMenu() {
       for (const video of videos) {
         // Plays from the beginning next time, alternatively use .pause()
         video.video.stop();
+        webcam.stop();
       }
       activeVideo = video;
       activeVideo.video.loop();
       for (const tracker of trackers) {
-        tracker.changedSource(video.video);
+        tracker.changedSource(activeVideo.video);
       }
       focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
     });
     videoBtn.parent(sourceList);
   }
+  const webcamBtn = createTextButton('Webcam', () => {
+    for (const video of videos) {
+      // Plays from the beginning next time, alternatively use .pause()
+      video.video.stop();
+    }
+    if (!webcam) {
+      const webcamVideo = createCapture(VIDEO);
+      webcamVideo.hide();
+      webcam = {
+        video: webcamVideo,
+        label: 'Webcam',
+      };
+    }
+    activeVideo = webcam;
+    for (const tracker of trackers) {
+      tracker.changedSource(activeVideo.video);
+    }
+    focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
+  });
+  webcamBtn.parent(sourceList);
+    
   sourceBox = new MenuBox(
     menu,
     "Source",
