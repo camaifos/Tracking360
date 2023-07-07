@@ -35,6 +35,12 @@ class MenuBox {
       child.remove();
     }
     this.contentBox.child(content);
+
+    if (this.container.hasClass("active")) {
+      this.contentBox.style("max-height", this.contentBox.elt.scrollHeight + "px");
+    } else {
+      this.contentBox.style("max-height", "0");
+    }
   }
 }
 

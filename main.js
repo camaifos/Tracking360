@@ -17,7 +17,10 @@ const videoSrcs = [
   },
 ];
 
+let welcome = true;
+
 let videos;
+let webcam;
 let activeVideo;
 let activeTracker;
 let focusPoint;
@@ -46,7 +49,6 @@ function setup() {
     videos.push({
       video: video,
       label: src.label,
-      ready: false,
     });
   }
 
@@ -76,8 +78,20 @@ function setup() {
 function draw() {
   background(220);
 
+  if (activeVideo.video.elt.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+    select('#loadingOverlay').style('visibility', 'visible');
+    return;
+  } else {
+    select('#loadingOverlay').style('visibility', 'hidden');
+    if (welcome) {
+      select('#welcomeOverlay').style('visibility', 'visible');
+      welcome = false;
+    }
+  }
   activeVideo.video.loadPixels();
   if (activeVideo.video.pixels.length === 0) {
+    // Should not happen with check above, but just in case
+    console.debug('No pixels');
     return;
   }
 
@@ -114,7 +128,6 @@ function setupMenu() {
   const menu = select('#menu-container');
 
   // Source
-  // TODO: Add a way to select a video file and call activeTracker.changedSource(video)
   const sourceContent = createDiv();
   sourceContent.addClass('vertical-stack');
   sourceContent.child(preview);
@@ -122,21 +135,49 @@ function setupMenu() {
   const sourceList = createDiv();
   sourceList.parent(sourceContent);
   sourceList.addClass('horizontal-stack');
-  for (const video of videos) {
-    const videoBtn = createTextButton(video.label, () => {
-      for (const video of videos) {
-        // Plays from the beginning next time, alternatively use .pause()
+  const changeSource = (videoBtn, video, isWebcam) => {
+    for (const btn of sourceList.child()) {
+      btn.classList.remove('active');
+    }
+    videoBtn.elt.classList.add('active');
+
+    for (const video of videos) {
+      // Plays from the beginning next time, alternatively use .pause()
+      if (video) {
         video.video.stop();
       }
-      activeVideo = video;
+    }
+    activeVideo = video;
+    if (isWebcam) {
+      activeVideo.video.play();
+    } else {
       activeVideo.video.loop();
-      for (const tracker of trackers) {
-        tracker.changedSource(video.video);
-      }
-      focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
+    }
+    for (const tracker of trackers) {
+      tracker.changedSource(activeVideo.video);
+    }
+    focusPoint = createVector(activeVideo.video.width / 2, activeVideo.video.height / 2);
+  };
+  for (const video of videos) {
+    const videoBtn = createTextButton(video.label, () => {
+      changeSource(videoBtn, video, false);
     });
     videoBtn.parent(sourceList);
   }
+  const webcamBtn = createTextButton('Webcam', () => {
+    if (!webcam) {
+      const webcamVideo = createCapture(VIDEO);
+      webcamVideo.hide();
+      webcam = {
+        video: webcamVideo,
+        label: 'Webcam',
+      };
+    }
+    changeSource(webcamBtn, webcam, true);
+  });
+  sourceList.child()[0].classList.add('active');
+  webcamBtn.parent(sourceList);
+    
   sourceBox = new MenuBox(
     menu,
     "Source",
@@ -150,11 +191,18 @@ function setupMenu() {
   trackingContent.addClass('vertical-stack');
   for (const tracker of trackers) {
     const trackerBtn = createTextButton(tracker.label, () => {
+      for (const btn of trackingContent.child()) {
+        btn.classList.remove('active');
+      }
+      trackerBtn.elt.classList.add('active');
+
       activeTracker = tracker;
       tuningBox.setContent(tracker.params);
+      infoBox.setContent(createP(tracker.description));
     });
     trackerBtn.parent(trackingContent);
   }
+  trackingContent.child()[0].classList.add('active');
   trackingBox = new MenuBox(
     menu,
     "Tracking",
