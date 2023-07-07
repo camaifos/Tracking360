@@ -17,6 +17,8 @@ const videoSrcs = [
   },
 ];
 
+let welcome = true;
+
 let videos;
 let activeVideo;
 let activeTracker;
@@ -46,7 +48,6 @@ function setup() {
     videos.push({
       video: video,
       label: src.label,
-      ready: false,
     });
   }
 
@@ -76,8 +77,20 @@ function setup() {
 function draw() {
   background(220);
 
+  if (activeVideo.video.elt.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+    select('#loadingOverlay').style('visibility', 'visible');
+    return;
+  } else {
+    select('#loadingOverlay').style('visibility', 'hidden');
+    if (welcome) {
+      select('#welcomeOverlay').style('visibility', 'visible');
+      welcome = false;
+    }
+  }
   activeVideo.video.loadPixels();
   if (activeVideo.video.pixels.length === 0) {
+    // Should not happen with check above, but just in case
+    console.debug('No pixels');
     return;
   }
 
