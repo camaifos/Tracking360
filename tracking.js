@@ -97,21 +97,21 @@ const trackers = [
   {
     label: "Helligkeit",
     get params() {
-      this.thresholdSlider = createLabelledSlider(0, 255, this.threshold);
-      return this.thresholdSlider;
+      this.targetBrightnessSlider = createLabelledSlider(0, 255, this.targetBrightness);
+      return this.targetBrightnessSlider;
     },
 
     init() {
-      this.threshold = 0;
+      this.targetBrightness = 255;
     },
 
     changedSource(video) { },
 
     track(video, previewCtx) {
-      this.threshold = this.thresholdSlider.value();
+      this.targetBrightness = this.targetBrightnessSlider.value();
 
-      let brightestValue = 0;
-      let brightestX, brightestY;
+      let closestValue = 256 * 3;
+      let closestX, closestY;
 
       video.loadPixels();
       for (let y = 0; y < video.height; y += 8) {
@@ -121,31 +121,29 @@ const trackers = [
           let g = video.pixels[loc + 1];
           let b = video.pixels[loc + 2];
           let brightness = (r + g + b);
+          let distance = abs(this.targetBrightness * 3 - brightness);
 
-          if (brightness > brightestValue) {
-            brightestValue = brightness;
-            brightestX = x;
-            brightestY = y;
+          if (distance < closestValue) {
+            closestValue = distance;
+            closestX = x;
+            closestY = y;
           }
         }
       }
 
-      if (brightestX === undefined || brightestY === undefined) {
-        return;
-      }
-      if (brightestValue < this.threshold * 3) {
+      if (closestX === undefined || closestY === undefined) {
         return;
       }
 
-      // Draw a circle at the brightest pixel
-      previewCtx.fill(brightness(video.get(brightestX, brightestY)) / 100 * 255);
+      // Draw a circle at the closest pixel
+      previewCtx.fill(brightness(video.get(closestX, closestY)) / 100 * 255);
       previewCtx.circle(
-        map(brightestX, 0, video.width, 0, previewCtx.width),
-        map(brightestY, 0, video.height, 0, previewCtx.height),
+        map(closestX, 0, video.width, 0, previewCtx.width),
+        map(closestY, 0, video.height, 0, previewCtx.height),
         20
       );
 
-      return createVector(brightestX, brightestY);
+      return createVector(closestX, closestY);
     },
   },
 
