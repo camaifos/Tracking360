@@ -198,6 +198,7 @@ function setupMenu() {
 
       activeTracker = tracker;
       tuningBox.setContent(tracker.params);
+      infoBox.setContent(createP(tracker.description));
     });
     trackerBtn.parent(trackingContent);
   }
