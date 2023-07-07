@@ -396,7 +396,7 @@ const trackers = [
         }
 
         if (i++ === 0) {
-          vec = createVector(obj.x, obj.y);
+          vec = createVector(obj.x + obj.width / 2, obj.y + obj.height / 2);
           previewCtx.stroke(0, 255, 0);
         } else {
           previewCtx.stroke(255, 255, 255);
