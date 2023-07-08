@@ -1,20 +1,20 @@
 const videoSrcs = [
   {
-    src: 'media/Tassen.min.MP4',
-    label: 'Tassen',
+    src: 'media/17s_Billiard.mp4',
+    label: 'Billard',
   },
   {
-    src: 'media/R0010623.min.mp4',
-    label: 'Chilbi',
+    src: 'media/12s_Kicker.mp4',
+    label: 'Kicker',
   },
   {
-    src: 'media/R0010614.min.mp4',
-    label: 'Jucy Lemon Club',
+    src: 'media/ca10s_Körbe.mp4',
+    label: 'Baskettball',
   },
-  {
+  /*{
     src: 'media/R0010605.min.mp4',
     label: 'Bandprobe',
-  },
+  },*/
 ];
 
 let welcome = true;
@@ -245,9 +245,10 @@ function setupMenu() {
 
   // About
   const aboutContent = createDiv()
-    .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open-Source-Projekt</br></br>"))
+    .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt</br></br>"))
     .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi</br></br>"))
-    .child(createP("Prozessdokumentation hier.</br></br>"))
+    .child(createP("Prozessdokumentation hier:</br>"))
+    .child(createA('Prozessdokumentation/Camrpubi_Sofia_Prozessdokumentation.html', 'www.sofiacamprubi.ch/360Tracking-Prozess'));
     .child(createP("Danke</br>Ted Davis (Mentor)</br>Viola Diehl (Mentorin)</br>Jonas Schafftner (Mentor)</br>Florian Affolter"));
   // ...
   aboutBox = new MenuBox(
