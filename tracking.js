@@ -21,12 +21,12 @@ const trackers = [
     label: "Farbe",
     get params() {
       const params = createDiv();
-      params.child(createP("Klicke auf das Panoramavideo oder nutze den Farbwähler um eine Farbe zu verfolgen."))
+      params.child(createP("Klicke auf das Panoramavideo oder nutze den Farbwähler, um eine Farbe zu verfolgen."))
       this.colorPicker = createColorPicker(this.color);
       params.child(this.colorPicker);
       return params;
     },
-    description: "Die Verfolgung von Objekten anhand der Farbe ist eine der schnellsten und einfachsten Methoden zur Verfolgung eines Objekts von einem Frame zum nächsten. Die Geschwindigkeit dieser Technik macht sie für echtzeitnahe Anwendungen sehr attraktiv, aber aufgrund ihrer Einfachheit gibt es viele Probleme, die zum Scheitern der Verfolgung führen können.",
+    description: "Die Verfolgung von Objekten anhand der Farbe ist eine der schnellsten und einfachsten Methoden zur Verfolgung eines Objekts von einem Bild zum nächsten.</br>Die Geschwindigkeit dieser Technik macht sie für echtzeitnahe Anwendungen sehr attraktiv, aber aufgrund ihrer Einfachheit gibt es viele Probleme, die zum Scheitern der Verfolgung führen können.",
 
     init() {
       this.color = color(255, 0, 0);
@@ -48,7 +48,6 @@ const trackers = [
         this.colorPicker.value(this.color.toString('#rrggbb'));
       }
 
-      // We are going to look at the video's pixels
       video.loadPixels();
 
       // Before we begin searching, the "world record" for closest color is set to a high number that is easy for the first pixel to beat.
@@ -98,12 +97,13 @@ const trackers = [
     label: "Helligkeit",
     get params() {
       const params = createDiv();
-      params.child(createP("Verschiebe den Regler um die dunkelste bis hellste Stelle zu verfolgen."))
+      params.child(createP("Verschiebe den Regler, um die dunkelste bis hellste Stelle zu verfolgen."))
       this.targetBrightnessSlider = createLabelledSlider(0, 255, this.targetBrightness);
       this.targetBrightnessSlider.style("margin-top", "10px");
       params.child(this.targetBrightnessSlider);
       return params;
     },
+    description: "Die Helligkeit wird verwendet, um Änderungen der Luminanz- oder Intensitätswerte in aufeinanderfolgenden Bildern zu analysieren und zu verfolgen. Dies erleichtert die Erkennung von dynamischen Objekten oder Szenenänderungen. Der Vergleich von Pixel-Helligkeitswerten ermöglicht Anwendungen wie Bewegungserkennung, Vordergrund-Hintergrund-Segmentierung und Ereigniserkennung.",
 
     init() {
       this.targetBrightness = 255;
@@ -155,12 +155,13 @@ const trackers = [
    *  Point tracker
    */
   {
-    label: "Pixelverfolgung",
+    label: "Punktverfolgung",
     get params() {
       const params = createDiv();
-      params.child(createP("Klicke auf das Panoramavideo um einen Punkt zu verfolgen."))
+      params.child(createP("Klicke auf das Panoramavideo, um einen Punkt zu verfolgen."))
       return params;
     },
+    description:"Punktverfolgung bezieht sich auf den Prozess der Erkennung und Verfolgung spezifischer Punkte oder Schlüsselpunkte von Interesse in aufeinanderfolgenden Bildern. Dabei wird die Bewegung dieser Punkte identifiziert und verfolgt, was verschiedene Anwendungen wie Objektverfolgung, Bewegungsanalyse und Augmented Reality ermöglicht.",
 
     init() {
       this.pointCount = 0;
@@ -260,11 +261,12 @@ const trackers = [
       params.child(this.zoneSizeSlider);
       params.child(createP("Empfindlichkeit"));
       params.child(this.thresholdSlider);
-      params.child(createP("</br>Wähle aus entlang welcher Achse die Bewegung gemessen werden soll."));
+      params.child(createP("</br>Wähle aus, entlang welcher Achse die Bewegung gemessen werden soll."));
       params.child(this.xAxisCheckbox);
       params.child(this.yAxisCheckbox);
       return params;
     },
+    description: "Der optische Fluss misst die sichtbare Bewegung in aufeinanderfolgenden Bildern. Das Verfahren wird in Bereichen wie der Robotik (um zu wissen, wie sich ein Zielobjekt in der Szene bewegt) und der Analyse von Menschenmengen (zur Ermittlung der individuellen und durchschnittliche Bewegung).</br></br>Um den optischen Fluss zu berechnen, wird das zu verfolgende Pixel mit seinen Nachbarn im vorherigen Bild verglichen. Die Richtung der Bewegung ist diejenige, die am ähnlichsten ist.",
 
     init() {
       this.zoneSize = 8;
@@ -358,13 +360,14 @@ const trackers = [
     label: "Objekterkennung",
     get params() {
       const params = createDiv();
-      params.child(createP("Wähle welcher Themenbereich verfolgt werden soll."));
+      params.child(createP("Wähle, welcher Themenbereich verfolgt werden soll."));
       this.peopleCheckbox = createCheckbox("Personen", this.people);
       this.objectsCheckbox = createCheckbox("Objekte", this.objects);
       params.child(this.peopleCheckbox);
       params.child(this.objectsCheckbox);
       return params;
     },
+    description: "Die Objekterkennung wird eingesetzt, um mithilfe einer KI automatisch bestimmte Objekte von Interesse innerhalb von Videobildern zu identifizieren und zu lokalisieren, was eine effiziente und genaue Verfolgung ermöglicht. Dadurch werden Aufgaben wie Videoüberwachung, Aktivitätserkennung und Objektverfolgung in Echtzeit in verschiedenen Anwendungen erleichtert.",
 
     init() {
       this.people = true;
