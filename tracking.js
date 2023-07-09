@@ -367,7 +367,7 @@ const trackers = [
       params.child(this.objectsCheckbox);
       return params;
     },
-    description: "Die Objekterkennung wird eingesetzt, um mithilfe einer KI automatisch bestimmte Objekte von Interesse innerhalb von Videobildern zu identifizieren und zu lokalisieren, was eine effiziente und genaue Verfolgung ermöglicht. Dadurch werden Aufgaben wie Videoüberwachung, Aktivitätserkennung und Objektverfolgung in Echtzeit in verschiedenen Anwendungen erleichtert.",
+    description: "Die Objekterkennung wird eingesetzt, um mithilfe einer KI automatisch bestimmte Objekte von Interesse innerhalb von Frames zu identifizieren und zu lokalisieren, was eine effiziente und genaue Verfolgung ermöglicht. Dadurch werden Aufgaben wie Videoüberwachung, Aktivitätserkennung und Objektverfolgung in Echtzeit in verschiedenen Anwendungen erleichtert.",
 
     init() {
       this.people = true;

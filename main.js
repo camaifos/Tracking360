@@ -9,12 +9,8 @@ const videoSrcs = [
   },
   {
     src: 'media/ca10s_Körbe.mp4',
-    label: 'Baskettball',
+    label: 'Basketball',
   },
-  /*{
-    src: 'media/R0010605.min.mp4',
-    label: 'Bandprobe',
-  },*/
 ];
 
 let welcome = true;
@@ -247,9 +243,9 @@ function setupMenu() {
   const aboutContent = createDiv()
     .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt</br></br>"))
     .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi</br></br>"))
+    .child(createP("Danke</br>Ted Davis (Mentor)</br>Viola Diehl (Mentorin)</br>Jonas Schafftner (Mentor)</br>Florian Affolter</br></br>"))
     .child(createP("Prozessdokumentation hier:</br>"))
-    .child(createA('Prozessdokumentation/Camrpubi_Sofia_Prozessdokumentation.html</br>www.sofiacamprubi.ch/360Tracking-Prozess'))
-    .child(createP("Danke</br>Ted Davis (Mentor)</br>Viola Diehl (Mentorin)</br>Jonas Schafftner (Mentor)</br>Florian Affolter"))
+    .child(createA("Prozessdokumentation/Camrpubi_Sofia_Prozessdokumentation.html","www.sofiacamprubi.ch/360Tracking-Prozess"))
   // ...
   aboutBox = new MenuBox(
     menu,
