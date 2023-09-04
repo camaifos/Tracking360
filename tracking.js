@@ -14,8 +14,11 @@
  *      click.
  */
 const trackers = [
+  
   /*
-   *  Color tracker
+   *  COLOR TRACKER
+   *  modified code from Learning Processing, Daniel Shiffman
+   *  http://www.learningprocessing.com
    */
   {
     label: "Farbe",
@@ -91,7 +94,9 @@ const trackers = [
   },
 
   /*
-   *  Brightness tracker
+   *  BRIGHTNESS TRACKER
+   *  modified code from cs105
+   *  https://editor.p5js.org/cs105/sketches/RJQqBip9o
    */
   {
     label: "Helligkeit",
@@ -152,7 +157,9 @@ const trackers = [
   },
 
   /*
-   *  Point tracker
+   *  POINT TRACKER
+   *  modified code from Kyle McDonald
+   *  https://kylemcdonald.github.io/cv-examples/PointTracking/
    */
   {
     label: "Punktverfolgung",
@@ -245,7 +252,9 @@ const trackers = [
   },
 
   /*
-   *  Optical flow tracker
+   *  OPTICAL FLOW TRACKER
+   *  modified code from Jeff Thompson
+   *  https://editor.p5js.org/jeffThompson/sketches/DfsmBZ9O0
    */
   {
     label: "Bewegung",
@@ -354,7 +363,9 @@ const trackers = [
   },
 
   /*
-   *  Object tracker
+   *  OBJECT DETECTION TRACKER
+   *  modified code from Kyle McDonald
+   *  https://kylemcdonald.github.io/cv-examples/ObjectRecognition/
    */
   {
     label: "Objekterkennung",
