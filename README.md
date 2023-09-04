@@ -10,6 +10,5 @@ Das Ausprobieren verschiedener Möglichkeiten und Kombinationen soll Tracking f�
 
 Denn wenn ich mithilfe von Open-Source-Codes und -Anwendungen gearbeitet habe, wie weit ist Tracking hinter verschlossenen Türen?
 
-BA-Thesis
+BA-Thesis <br>
 IDCE FHNW HGK, Basel
-Sofia Camprubi
