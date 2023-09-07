@@ -243,7 +243,7 @@ function setupMenu() {
   const aboutContent = createDiv()
     .child(createP("Möglichkeiten von Tracking in 360°</br>Ein Open Source Projekt</br></br>"))
     .child(createP("BA-Thesis</br>IDCE FHNW HGK, Basel</br>Sofia Camprubi</br></br>"))
-    .child(createP("Danke</br>Ted Davis (Mentor)</br>Viola Diehl (Mentorin)</br>Jonas Schafftner (Mentor)</br>Florian Affolter</br></br>"))
+    .child(createP("Danke</br>Ted Davis (Mentor)</br>Viola Diehl (Mentorin)</br>Jonas Schaffter (Mentor)</br>Florian Affolter</br></br>"))
     .child(createP("Prozessdokumentation hier:</br>"))
     .child(createA("Prozessdokumentation/Camrpubi_Sofia_Prozessdokumentation.html","www.sofiacamprubi.ch/360Tracking-Prozess"))
   // ...
